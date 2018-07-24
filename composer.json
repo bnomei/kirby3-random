@@ -1,0 +1,22 @@
+{
+    "name": "bnomei/random",
+    "type": "plugin",
+    "version": "2.0.0",
+    "autoload": {
+        "files": [
+            "config.php"
+        ],
+        "psr-4": {
+            "Bnomei\\": "classes/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Bruno Meilick",
+            "email": "b@bnomei.com"
+        }
+    ],
+    "require": {
+      "joshtronic/php-loremipsum": "^1.0"
+    }
+}
