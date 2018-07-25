@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "4ff7e6745d0ff4a2ddd357acb57191a0",
-    "content-hash": "451a961ef60c8396fbb1947dfc86fcc0",
+    "hash": "b98138d7641aea7ae9410e39649ea3ac",
+    "content-hash": "8d74af93bb73627031e84f513505516a",
     "packages": [
         {
             "name": "joshtronic/php-loremipsum",

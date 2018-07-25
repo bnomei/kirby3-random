@@ -1,5 +1,5 @@
 {
-    "name": "bnomei/random",
+    "name": "bnomei/kirby3-random",
     "type": "plugin",
     "version": "2.0.0",
     "autoload": {
