@@ -73,6 +73,11 @@ A number between a min and max value inclusive using PHP `random_int()` (or `ran
 (random: lorem kind: chars length: 140)
 ```
 
+Token
+```
+(random: token kind: number upper length: 12)
+```
+
 The plugin also adds a `$page->random()` function to use in templates etc.
 
 ```php
@@ -90,6 +95,10 @@ echo $page->random($myArray, 'pool', 3);
 
 // LOREM
 echo $page->random('lorem', 'paragraphs', 3);
+
+// Token: upper, lower, numbers
+echo $page->random('token', 'lower,numbers', 5); // d63jd
+echo $page->random('token', 'lower,upper', 5); // GjHoL
 ```
 
 ## Disclaimer
