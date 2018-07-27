@@ -1,7 +1,8 @@
 {
     "name": "bnomei/kirby3-random",
     "type": "plugin",
-    "version": "2.2.2",
+    "version": "2.2.3",
+    "description": "Kirby Tag and Page Method to generate various random values",
     "license": "MIT",
     "autoload": {
         "files": [
