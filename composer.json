@@ -1,7 +1,7 @@
 {
     "name": "bnomei/kirby3-random",
     "type": "plugin",
-    "version": "2.2.3",
+    "version": "2.2.4",
     "description": "Kirby Tag and Page Method to generate various random values",
     "license": "MIT",
     "autoload": {
@@ -25,8 +25,8 @@
         }
     ],
     "require": {
-        "getkirby/cms": "3.0.*",
-        "joshtronic/php-loremipsum": "^1.0"
+        "joshtronic/php-loremipsum": "^1.0",
+        "getkirby/cms": "dev-master as 3.0.0"
     },
     "minimum-stability": "beta"
 }
