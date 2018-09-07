@@ -4,7 +4,7 @@
 
 Kirby Tag and Page Method to generate various random values.
 
-This plugin is free but if you use it in a commercial project please consider to [make a donation 🍻](https://www.paypal.me/bnomei/5).
+This plugin is free but if you use it in a commercial project please consider to [make a donation 🍻](https://www.paypal.me/bnomei/4).
 
 ## Migrating tag use from Kirby V2 to V3
 
