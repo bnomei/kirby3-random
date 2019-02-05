@@ -7,6 +7,10 @@ namespace Composer\Autoload;
 class ComposerStaticInit661daf3a8ea269f8b77ccba9f8602855
 {
     public static $prefixLengthsPsr4 = array (
+        'j' => 
+        array (
+            'joshtronic\\' => 11,
+        ),
         'K' => 
         array (
             'Kirby\\' => 6,
@@ -18,6 +22,10 @@ class ComposerStaticInit661daf3a8ea269f8b77ccba9f8602855
     );
 
     public static $prefixDirsPsr4 = array (
+        'joshtronic\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/joshtronic/php-loremipsum/src',
+        ),
         'Kirby\\' => 
         array (
             0 => __DIR__ . '/..' . '/getkirby/composer-installer/src',
@@ -33,6 +41,7 @@ class ComposerStaticInit661daf3a8ea269f8b77ccba9f8602855
         'Kirby\\ComposerInstaller\\CmsInstaller' => __DIR__ . '/..' . '/getkirby/composer-installer/src/ComposerInstaller/CmsInstaller.php',
         'Kirby\\ComposerInstaller\\Plugin' => __DIR__ . '/..' . '/getkirby/composer-installer/src/ComposerInstaller/Plugin.php',
         'Kirby\\ComposerInstaller\\PluginInstaller' => __DIR__ . '/..' . '/getkirby/composer-installer/src/ComposerInstaller/PluginInstaller.php',
+        'joshtronic\\LoremIpsum' => __DIR__ . '/..' . '/joshtronic/php-loremipsum/src/LoremIpsum.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
