@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit661daf3a8ea269f8b77ccba9f8602855
+class ComposerStaticInit3a3f7a21b6c2e703a1b02df2de83773c
 {
     public static $prefixLengthsPsr4 = array (
         'j' => 
@@ -39,6 +39,7 @@ class ComposerStaticInit661daf3a8ea269f8b77ccba9f8602855
     public static $classMap = array (
         'Bnomei\\Random' => __DIR__ . '/../..' . '/classes/Random.php',
         'Kirby\\ComposerInstaller\\CmsInstaller' => __DIR__ . '/..' . '/getkirby/composer-installer/src/ComposerInstaller/CmsInstaller.php',
+        'Kirby\\ComposerInstaller\\Installer' => __DIR__ . '/..' . '/getkirby/composer-installer/src/ComposerInstaller/Installer.php',
         'Kirby\\ComposerInstaller\\Plugin' => __DIR__ . '/..' . '/getkirby/composer-installer/src/ComposerInstaller/Plugin.php',
         'Kirby\\ComposerInstaller\\PluginInstaller' => __DIR__ . '/..' . '/getkirby/composer-installer/src/ComposerInstaller/PluginInstaller.php',
         'joshtronic\\LoremIpsum' => __DIR__ . '/..' . '/joshtronic/php-loremipsum/src/LoremIpsum.php',
@@ -47,9 +48,9 @@ class ComposerStaticInit661daf3a8ea269f8b77ccba9f8602855
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit661daf3a8ea269f8b77ccba9f8602855::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit661daf3a8ea269f8b77ccba9f8602855::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit661daf3a8ea269f8b77ccba9f8602855::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit3a3f7a21b6c2e703a1b02df2de83773c::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit3a3f7a21b6c2e703a1b02df2de83773c::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit3a3f7a21b6c2e703a1b02df2de83773c::$classMap;
 
         }, null, ClassLoader::class);
     }

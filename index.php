@@ -13,7 +13,7 @@ Kirby::plugin('bnomei/random', [
 
             return \Bnomei\Random::random($random, $type, $length, 'site::method');
         }
-    ],
+],
     'tags' => [
         'random' => [
             'attr'=> [
