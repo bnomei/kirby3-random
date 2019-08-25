@@ -11,7 +11,6 @@
 [![Twitter](https://flat.badgen.net/badge/twitter/bnomei?color=66d9ef)](https://twitter.com/bnomei)
 
 
-
 Kirby Tag and Page Method to generate various random values.
 
 ## Commercial Usage
@@ -26,31 +25,6 @@ This plugin is free but if you use it in a commercial project please consider to
 - unzip [master.zip](https://github.com/bnomei/kirby3-random/archive/master.zip) as folder `site/plugins/kirby3-random` or
 - `git submodule add https://github.com/bnomei/kirby3-random.git site/plugins/kirby3-random` or
 - `composer require bnomei/kirby3-random`
-
-## Migrating tag use from Kirby V2 to V3
-
-The `type` attribute is a reserved keyword for Kirby Tags in Kirby CMS V3.
-You need to replace `type` with `kind`.
-
-```
-// V2
-(random: 5 type: alpha)
-// V3
-(random: 5 kind: alpha)
-```
-
-Also the Site Methods has been replaced with a Page Method.
-
-> ATTENTION: Page method not working (yet). issue pending.
-
-```php
-// V2
-echo $site->random('red, green, blue, black, white, yellow', 'pool', 3);
-
-// V3
-echo $page->random('red, green, blue, black, white, yellow', 'pool', 3);
-
-```
 
 ## Usage
 
@@ -121,6 +95,35 @@ echo $page->random('lorem', 'paragraphs', 3);
 echo $page->random('token', 'lower,numbers', 5); // d63jd
 echo $page->random('token', 'lower,upper', 5); // GjHoL
 ```
+
+## Migrating tag use from Kirby V2 to V3
+
+The `type` attribute is a reserved keyword for Kirby Tags in Kirby CMS V3.
+You need to replace `type` with `kind`.
+
+```
+// V2
+(random: 5 type: alpha)
+// V3
+(random: 5 kind: alpha)
+```
+
+Also the Site Methods has been replaced with a Page Method.
+
+> ATTENTION: Page method not working (yet). issue pending.
+
+```php
+// V2
+echo $site->random('red, green, blue, black, white, yellow', 'pool', 3);
+
+// V3
+echo $page->random('red, green, blue, black, white, yellow', 'pool', 3);
+
+```
+
+## Dependencies
+
+- [joshtronic/php-loremipsum](https://github.com/joshtronic/php-loremipsum)
 
 ## Disclaimer
 
