@@ -31,7 +31,7 @@ This plugin is free but if you use it in a commercial project please consider to
 | Regex/Info | Kirbytag | Page-Method | Static |
 |-------|----------|-------------|--------|
 | `[0-9]{1,3}` | `(random: 999 generator: number)` | `$page->random(999)` | `Random::number(0, 999)` |
-| `[0-9]?` | `(random: 0, 9 generator: between)` | `$page->random([0, 9], 'between')` | `Random::between([0, 9])` |
+| `[0-9]{1}` | `(random: 0, 9 generator: between)` | `$page->random([0, 9], 'between')` | `Random::between([0, 9])` |
 | `(\d\w){5,10}` | `(random:)` | `$page->random()` | `Random::string()` |
 | `\d{5}` | `(random: 5 generator: num)` | ` $page->random(5, 'num')` | `Random::string(5, 'num')` |
 | `(apple OR banana OR coconut)` | `(random: apple, banana, coconut generator: pick)` | `$page->random('apple, banana, coconut', 'pick')` | `Random::pick(['apple', 'banana', 'coconut'])` |
