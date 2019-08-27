@@ -2,116 +2,103 @@
 
 namespace Bnomei;
 
+use Exception;
 use joshtronic\LoremIpsum;
-use Kirby\Toolkit\Str;
-use function array_merge;
+use Kirby\Toolkit\A;
 use function base64_encode;
-use function bin2hex;
-use function hexdec;
 use function implode;
-use function openssl_random_pseudo_bytes;
 use function random_bytes;
 use function random_int;
 use function range;
-use function str_repeat;
-use function str_shuffle;
 use function strtolower;
 use function substr;
 
-class Random
+final class Random
 {
-    protected static function random_int($min, $max)
+    /**
+     * @param null $random
+     * @param string|null $generator
+     * @param int|null $length
+     * @return array|int|mixed|string
+     * @throws Exception
+     */
+    public static function generate($random = null, ?string $generator = null, ?int $length = null)
     {
-        return function_exists('random_int') ? random_int($min, $max) : rand($min, $max);
-    }
+        if ($generator && is_string($generator)) {
+            $generator = strtolower($generator);
 
-    public static function random($random, $type = false, $length = false, $calle = '')
-    {
+            if ($generator === 'number') {
+                return self::number(0, intval($random));
 
-    // LIST
-        if (count($random) > 1) {
-            if (strtolower($type) == 'between') {
-                $min = intval($random[0]);
-                $max = intval($random[count($random)-1]);
-                return (string)self::random_int($min, $max);
-            } elseif (strtolower($type) == 'pool') {
-                $l = $length && $length <= count($random) ? $length : count($random);
-                if ($l == count($random)) {
-                    $s = $random;
-                    shuffle($s);
-                    return implode(', ', $s);
-                } else {
-                    $poolkeys = array_rand($random, $l);
-                    return implode(', ', array_intersect_key($random, array_flip($poolkeys)));
-                }
-            } else {
-                return (string)$random[self::random_int(0, count($random)-1)];
+            } elseif ($generator === 'string') {
+                return self::string(intval($length), strval($random));
+
+            } elseif ($generator === 'pick') {
+                return self::pick(intval($length), strval($random));
+
+            } elseif ($generator === 'between') {
+                return self::between($random);
+
+            } elseif ($generator === 'lorem') {
+                return self::lorem(intval($length), strval($random));
+
+            } elseif ($generator === 'token') {
+                return self::token(intval($length), strval($random));
             }
         }
 
-        // LOREM using https://github.com/joshtronic/php-loremipsum
-        elseif ($length && count($random) > 0 && strtolower($random[0]) == 'lorem') {
-            $lipsum = new LoremIpsum();
-            if ($type == 'sentences') {
-                return $lipsum->sentences($length);
-            } elseif ($type == 'paragraphs') {
-                if ($calle == 'site::method') {
-                    $pa = $lipsum->paragraphsArray($length);
-                    $re = '';
-                    foreach ($pa as $p) {
-                        $re .= '<p>'.$p.'</p>';
-                    }
-                    return $re;
-                } else {
-                    return $lipsum->paragraphs($length);
-                }
-            } elseif ($type == 'chars') {
-                return substr($lipsum->words($length), 0, $length);
-            } else {
-                return $lipsum->words($length);
-            }
-        }
-
-        // RANDOM positive non-zero number
-        elseif ($length && strtolower($type) == 'number') {
-            return (string)self::random_int(1, $length);
-        }
-
-        // RANDOM token
-        elseif ($length && count($random) > 0 && strtolower($random[0]) == 'token') {
-            // $withLower = true, $withUpper = true, $withNumbers = true
-            return (string)self::getToken(
-                $length,
-                Str::contains($type, 'lower'),
-                Str::contains($type, 'upper'),
-                Str::contains($type, 'number')
-            );
-        }
-
-        // RANDOM string
-        else {
-            $l = $length ? $length : intval($random[0]);
-            $t = $type ? $type : false;
-            return $t ? static::randomString($l, $t) : static::randomString($l);
-        }
+        return self::string($random);
     }
 
-    // NOTE: copied str::random, str::quickRandom, str::pool from kirby cms v2
-    // https://github.com/getkirby/toolkit/blob/master/lib/str.php#L457
-    public static function randomString($length = false, $type = 'alphaNum')
+    /**
+     * @param int|null $length
+     * @param null $random
+     * @return array|mixed
+     */
+    public static function pick(?int $length = 3, $random = null)
     {
-        // fall back to insecure str::quickRandom() on PHP < 7
-        if (!function_exists('random_int') || !function_exists('random_bytes')) {
-            return static::quickRandom($length, $type);
+        $pool = is_array($random) ? $random : str_split(self::pool(strval($random), ''));
+        if (is_null($length)) {
+            $length = 1;
         }
-        if (!$length) {
+        $result = [];
+        for ($items = 0; $items < $length; $items++) {
+            $result[] = $pool[self::number(0, count($pool) - 1)];
+        }
+        return count($result) === 1 ? $result[0] : $result;
+    }
+
+    /**
+     * @param null $random
+     * @return int
+     */
+    public static function between($random = null): int
+    {
+        if (is_null($random) || (is_string($random) && strlen($random) === 0)) {
+            $random = [0, PHP_INT_MAX - 1];
+        }
+        if (is_string($random)) {
+            $random = explode(',', str_replace(' ', '', $random));
+        }
+        $min = intval(A::get($random, 0, 0));
+        $max = intval(A::get($random, 1, PHP_INT_MAX - 1));
+        return self::number($min, $max);
+    }
+
+    /**
+     * @param int|null $length
+     * @param string $random
+     * @return string
+     * @throws Exception
+     */
+    public static function string(?int $length = null, string $random = 'alphanum'): string
+    {
+        $random = strtolower($random);
+        if (is_null($length)) {
             $length = random_int(5, 10);
         }
-        $pool = static::pool($type, false);
-        // catch invalid pools
-        if (!$pool) {
-            return false;
-        }
+
+        $pool = self::pool($random, '');
         // regex that matches all characters *not* in the pool of allowed characters
         $regex = '/[^' . $pool . ']/';
         // collect characters until we have our required length
@@ -123,82 +110,110 @@ class Random
         }
         return $result;
     }
-    public static function quickRandom($length = false, $type = 'alphaNum')
+
+    /**
+     * http://stackoverflow.com/questions/1846202/php-how-to-generate-a-random-unique-alphanumeric-string/13733588#13733588
+     *
+     * @param int $length
+     * @param bool $withLower
+     * @param bool $withUpper
+     * @param bool $withNumbers
+     * @return string
+     */
+    public static function token(int $length = 40, string $random = 'alphanum'): string
     {
-        if (!$length) {
-            $length = rand(5, 10);
+        $codeAlphabet = self::pool($random, '');
+        $max = strlen($codeAlphabet);
+        if ($max === 0) {
+            return self::token($length);
         }
-        $pool = static::pool($type, false);
-        // catch invalid pools
-        if (!$pool) {
-            return false;
+        $token = [];
+        for ($i = 0; $i < $length; $i++) {
+            $token[] = $codeAlphabet[random_int(0, $max - 1)];
         }
-        return substr(str_shuffle(str_repeat($pool, $length)), 0, $length);
+        return implode($token);
     }
-    public static function pool($type, $array = true)
+
+    /**
+     * @param string|null $random
+     * @param int $length
+     * @return string
+     */
+    public static function lorem(int $length = 3, string $random = null): string
     {
-        $pool = array();
-        if (is_array($type)) {
-            foreach ($type as $t) {
-                $pool = array_merge($pool, static::pool($t));
+        $lipsum = new LoremIpsum();
+        $random = strtolower($random);
+        if ($random === 'sentences') {
+            return $lipsum->sentences($length);
+
+        } elseif ($random === 'paragraphs') {
+            return implode(
+                PHP_EOL . PHP_EOL,
+                $lipsum->paragraphsArray($length)
+            );
+
+        } elseif ($random === 'words') {
+            return $lipsum->words($length);
+
+        } elseif ($random === 'chars') {
+            return substr($lipsum->words($length), 0, $length);
+
+        }
+
+        return $lipsum->words($length);
+    }
+
+    /**
+     * @param $random
+     * @param string|null $implode
+     * @return array|string
+     */
+    public static function pool($random, ?string $implode = null)
+    {
+        $pool = [];
+        if (is_array($random)) {
+            $pool = $random;
+        }
+        if (is_string($random) && strpos($random, ',') !== false) {
+            $randoms = explode(',', str_replace(' ', '', $random));
+            foreach ($randoms as $rand) {
+                $pool[] = self::pool($rand, $implode);
             }
-        } else {
-            switch ($type) {
-        case 'alphaLower':
-          $pool = range('a', 'z');
-          break;
-        case 'alphaUpper':
-          $pool = range('A', 'Z');
-          break;
-        case 'alpha':
-          $pool = static::pool(array('alphaLower', 'alphaUpper'));
-          break;
-        case 'num':
-          $pool = range(0, 9);
-          break;
-        case 'alphaNum':
-          $pool = static::pool(array('alpha', 'num'));
-          break;
-      }
+            $pool = $pool;
         }
-        return $array ? $pool : implode('', $pool);
+        if (count($pool) === 0 && is_string($random)) {
+            $random = strtolower($random);
+            switch ($random) {
+                case 'alphalower':
+                    $pool = range('a', 'z');
+                    break;
+                case 'alphaupper':
+                    $pool = range('A', 'Z');
+                    break;
+                case 'alpha':
+                    $pool = self::pool('alphalower, alphaupper', $implode);
+                    break;
+                case 'num':
+                    $pool = range(0, 9);
+                    break;
+                case 'alphanum':
+                    $pool = self::pool('alpha, num', $implode);
+                    break;
+                default:
+                    $pool = $random;
+                    break;
+            }
+        }
+        return is_null($implode) || is_string($pool) ? $pool : implode($implode, $pool);
     }
 
-    // http://stackoverflow.com/questions/1846202/php-how-to-generate-a-random-unique-alphanumeric-string/13733588#13733588
-    public static function cryptoRandSecure($min, $max)
+    /**
+     * @param int $min
+     * @param int $max
+     * @return int
+     */
+    public static function number(int $min, int $max): int
     {
-        $range = $max - $min;
-        if ($range < 1) {
-            return $min;
-        } // not so random...
-        $log = ceil(log($range, 2));
-        $bytes = (int) ($log / 8) + 1; // length in bytes
-        $bits = (int) $log + 1; // length in bits
-        $filter = (int) (1 << $bits) - 1; // set all lower bits to 1
-        do {
-            $rnd = hexdec(bin2hex(openssl_random_pseudo_bytes($bytes)));
-            $rnd = $rnd & $filter; // discard irrelevant bits
-        } while ($rnd > $range);
-        return $min + $rnd;
-    }
-
-    public static function getToken($length = 40, $withLower = true, $withUpper = true, $withNumbers = true)
-    {
-        $token = "";
-        $codeAlphabet = "";
-        if ($withUpper) {
-            $codeAlphabet .= "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        }
-        if ($withLower) {
-            $codeAlphabet .= "abcdefghijklmnopqrstuvwxyz";
-        }
-        if ($withNumbers) {
-            $codeAlphabet .= "0123456789";
-        }
-        $max = strlen($codeAlphabet); // edited
-        for ($i=0; $i < $length; $i++) {
-            $token .= $codeAlphabet[self::cryptoRandSecure(0, $max-1)];
-        }
-        return $token;
+        return random_int($min, $max);
     }
 }

@@ -1,7 +1,7 @@
 {
   "name": "bnomei/kirby3-random",
   "type": "kirby-plugin",
-  "version": "2.3.4",
+  "version": "3.0.0",
   "description": "Kirby Tag and Page Method to generate various random values",
   "license": "MIT",
   "authors": [
@@ -19,7 +19,9 @@
     "pool",
     "between",
     "string",
-    "number"
+    "number",
+    "crypto",
+    "secure"
   ],
   "autoload": {
     "psr-4": {

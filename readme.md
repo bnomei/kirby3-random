@@ -28,98 +28,22 @@ This plugin is free but if you use it in a commercial project please consider to
 
 ## Usage
 
-Random string using [Kirby Toolkit](https://getkirby.com/docs/toolkit/api/str/random) `str::random()` forwarding the type if any.
+| Regex/Info | Kirbytag | Page-Method | Static |
+|-------|----------|-------------|--------|
+| `[0-9]{1,3}` | (random: 999 generator: number) | $page->random(999) | Bnomei\Random::number(0, 999) |
+| `[0-9]?` | (random: 0, 9 generator: between) | $page->random([0, 9], 'between') | Bnomei\Random::between([0, 9]) |
+| `(\d\w){5,10}` | (random:) | $page->random() | Bnomei\Random::string() |
+| `\d{5}` | (random: 5 generator: num) |  $page->random(5, 'num') | Bnomei\Random::string(5, 'num') |
+| `(apple OR banana OR coconut)` | (random: apple, banana, coconut generator: pick) | $page->random('apple, banana, coconut', 'pick') | Bnomei\Random::pick(['apple', 'banana', 'coconut']) |
+| 5 chars | (random: chars generator: lorem length: 5) | $page->random('chars', 'lorem', 5) | Bnomei\Random::lorem(5, 'chars') |
+| 5 words | (random: words generator: lorem length: 5) | $page->random('words', 'lorem', 5) | Bnomei\Random::lorem(5, 'words') |
+| 5 sentences | (random: sentences generator: lorem length: 5) | $page->random('sentences', 'lorem', 5) | Bnomei\Random::lorem(5, 'sentences') |
+| 5 [paragaph PHP_EOL PHP_EOL] | (random: paragraphs generator: lorem length: 5) | $page->random('paragraphs', 'lorem', 5) | Bnomei\Random::lorem(5, 'paragraphs') |
+| `[a-zA-Z0-9]{40}` | (random: generator: token) |  $page->random(null, 'token') | Bnomei\Random::token() |
+| `[A-Z0-9]{12}` | (random: alphaupper, num generator: token length: 12) |  $page->random('alphaupper, num', 'token', 12) | Bnomei\Random::token(12, 'alphaupper, num') |
 
-```
-(random: 5) or (random: 5 kind:alpha)
-```
-
-Random positiv non-zero number with max value inclusive using PHP `random_int()` (or `rand()` in php5).
-
-```
-(random: number length: 128)
-```
-
-Any one value of a comma seperated list.
-
-```
-(random: apple, banana, coconut)
-```
-
-Any random pool of values picked from a comma seperated list with optional length.
-
-```
-(random: red, green, blue, black, white, yellow kind: pool)
-or
-(random: red, green, blue, black, white, yellow kind: pool length: 3)
-```
-
-A number between a min and max value inclusive using PHP `random_int()` (or `rand()` in php5).
-```
-(random: 41, 53 kind: between)
-```
-
-`Lorem Ipsum` text using a [generator](https://github.com/joshtronic/php-loremipsum).
-
-```
-(random: lorem length: 5) or (random: lorem kind: words length: 4)
-(random: lorem kind: sentences length: 3)
-(random: lorem kind: paragraphs length: 2)
-(random: lorem kind: chars length: 140)
-```
-
-Token
-```
-(random: token kind: number upper length: 12)
-```
-
-The plugin also adds a `$page->random()` function to use in templates etc.
-
-```php
-// STRING
-echo $page->random(23);
-
-// NUMBER
-echo $page->random([41, 53], 'between');
-
-// POOL
-// from a comma seperated string
-echo $page->random('red, green, blue, black, white, yellow', 'pool', 3);
-// or a php array
-echo $page->random($myArray, 'pool', 3);
-
-// LOREM
-echo $page->random('lorem', 'paragraphs', 3);
-
-// Token: upper, lower, numbers
-echo $page->random('token', 'lower,numbers', 5); // d63jd
-echo $page->random('token', 'lower,upper', 5); // GjHoL
-```
-
-## Migrating tag use from Kirby V2 to V3
-
-The `type` attribute is a reserved keyword for Kirby Tags in Kirby CMS V3.
-You need to replace `type` with `kind`.
-
-```
-// V2
-(random: 5 type: alpha)
-// V3
-(random: 5 kind: alpha)
-```
-
-Also the Site Methods has been replaced with a Page Method.
-
-> ATTENTION: Page method not working (yet). issue pending.
-
-```php
-// V2
-echo $site->random('red, green, blue, black, white, yellow', 'pool', 3);
-
-// V3
-echo $page->random('red, green, blue, black, white, yellow', 'pool', 3);
-
-```
+> Markdown tables do not allow `|` in regex so i wrote ` OR ` instead.
+> For all random numbers the cryptographically safe PHP 7 function `rand_int` is used.
 
 ## Dependencies
 
