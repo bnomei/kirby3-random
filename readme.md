@@ -30,17 +30,17 @@ This plugin is free but if you use it in a commercial project please consider to
 
 | Regex/Info | Kirbytag | Page-Method | Static |
 |-------|----------|-------------|--------|
-| `[0-9]{1,3}` | (random: 999 generator: number) | $page->random(999) | Bnomei\Random::number(0, 999) |
-| `[0-9]?` | (random: 0, 9 generator: between) | $page->random([0, 9], 'between') | Bnomei\Random::between([0, 9]) |
-| `(\d\w){5,10}` | (random:) | $page->random() | Bnomei\Random::string() |
-| `\d{5}` | (random: 5 generator: num) |  $page->random(5, 'num') | Bnomei\Random::string(5, 'num') |
-| `(apple OR banana OR coconut)` | (random: apple, banana, coconut generator: pick) | $page->random('apple, banana, coconut', 'pick') | Bnomei\Random::pick(['apple', 'banana', 'coconut']) |
-| 5 chars | (random: chars generator: lorem length: 5) | $page->random('chars', 'lorem', 5) | Bnomei\Random::lorem(5, 'chars') |
-| 5 words | (random: words generator: lorem length: 5) | $page->random('words', 'lorem', 5) | Bnomei\Random::lorem(5, 'words') |
-| 5 sentences | (random: sentences generator: lorem length: 5) | $page->random('sentences', 'lorem', 5) | Bnomei\Random::lorem(5, 'sentences') |
-| 5 [paragaph PHP_EOL PHP_EOL] | (random: paragraphs generator: lorem length: 5) | $page->random('paragraphs', 'lorem', 5) | Bnomei\Random::lorem(5, 'paragraphs') |
-| `[a-zA-Z0-9]{40}` | (random: generator: token) |  $page->random(null, 'token') | Bnomei\Random::token() |
-| `[A-Z0-9]{12}` | (random: alphaupper, num generator: token length: 12) |  $page->random('alphaupper, num', 'token', 12) | Bnomei\Random::token(12, 'alphaupper, num') |
+| `[0-9]{1,3}` | `(random: 999 generator: number)` | `$page->random(999)` | `Bnomei\Random::number(0, 999)` |
+| `[0-9]?` | `(random: 0, 9 generator: between)` | `$page->random([0, 9], 'between')` | `Bnomei\Random::between([0, 9])` |
+| `(\d\w){5,10}` | `(random:)` | `$page->random()` | `Bnomei\Random::string()` |
+| `\d{5}` | `(random: 5 generator: num)` | ` $page->random(5, 'num')` | `Bnomei\Random::string(5, 'num')` |
+| `(apple OR banana OR coconut)` | `(random: apple, banana, coconut generator: pick)` | `$page->random('apple, banana, coconut', 'pick')` | `Bnomei\Random::pick(['apple', 'banana', 'coconut'])` |
+| `5 chars` | `(random: chars generator: lorem length: 5)` | `$page->random('chars', 'lorem', 5)` | `Bnomei\Random::lorem(5, 'chars')` |
+| `5 words` | `(random: words generator: lorem length: 5)` | `$page->random('words', 'lorem', 5)` | `Bnomei\Random::lorem(5, 'words')` |
+| `5 sentences` | `(random: sentences generator: lorem length: 5)` | `$page->random('sentences', 'lorem', 5)` | `Bnomei\Random::lorem(5, 'sentences')` |
+| `5 [paragaph PHP_EOL PHP_EOL]` | `(random: paragraphs generator: lorem length: 5)` | `$page->random('paragraphs', 'lorem', 5)` | `Bnomei\Random::lorem(5, 'paragraphs')` |
+| `[a-zA-Z0-9]{40}` | `(random: generator: token)` | ` $page->random(null, 'token')` | `Bnomei\Random::token()` |
+| `[A-Z0-9]{12}` | `(random: alphaupper, num generator: token length: 12)` | ` $page->random('alphaupper, num', 'token', 12)` | `Bnomei\Random::token(12, 'alphaupper, num')` |
 
 > Markdown tables do not allow `|` in regex so i wrote ` OR ` instead.
 > For all random numbers the cryptographically safe PHP 7 function `rand_int` is used.
