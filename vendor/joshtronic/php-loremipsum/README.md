@@ -1,12 +1,12 @@
 # php-loremipsum
 
-[![Build Status](https://travis-ci.org/joshtronic/php-loremipsum.svg?branch=master)](https://travis-ci.org/joshtronic/php-loremipsum)
-[![Coverage Status](https://coveralls.io/repos/github/joshtronic/php-loremipsum/badge.svg?branch=master)](https://coveralls.io/github/joshtronic/php-loremipsum?branch=master)
-[![Total Downloads](https://poser.pugx.org/joshtronic/php-loremipsum/downloads)](https://packagist.org/packages/joshtronic/php-loremipsum)
+[![License](https://img.shields.io/packagist/l/joshtronic/php-loremipsum?style=for-the-badge)](https://github.com/joshtronic/php-loremipsum/blob/master/LICENSE)
+![PHP Version](https://img.shields.io/packagist/php-v/joshtronic/php-loremipsum?style=for-the-badge)
+[![Test Status](https://img.shields.io/github/workflow/status/joshtronic/php-loremipsum/Test?style=for-the-badge)](https://github.com/joshtronic/php-loremipsum/actions)
+[![Code Coverage](https://img.shields.io/codecov/c/github/joshtronic/php-loremipsum?style=for-the-badge)](https://codecov.io/gh/joshtronic/php-loremipsum)
+[![Monthly Downloads](https://img.shields.io/packagist/dm/joshtronic/php-loremipsum?style=for-the-badge)](https://packagist.org/packages/joshtronic/php-loremipsum)
 
 Lorem ipsum generator in PHP without dependencies. Compatible with PHP 5.3+.
-
-[![Become a Patron](https://joshtronic.com/images/become-patron.png)](https://www.patreon.com/joshtronic)
 
 ## Installation
 
@@ -105,7 +105,7 @@ Suggestions and bug reports are always welcome, but karma points are earned for
 pull requests.
 
 Unit tests are required for all contributions. You can run the test suite from
-the `tests` directory simply by running `phpunit .`
+the project's root directory simply by running `phpunit`.
 
 ## Credits
 
